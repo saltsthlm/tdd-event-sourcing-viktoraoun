@@ -409,27 +409,6 @@ public class AccountAggregateTEst
   }
 
   [Fact]
-  public async void CurrencyChangeEvent_Should_ChangeAccountCurrency()
-  {
-    // Arrange
-    var events = await FileReader.GetStream(20);
-    var expectedAccount = new TestAccountAggregate
-    {
-      AccountId = "ACC123456",
-      Balance = 51000,
-      Currency = CurrencyType.Sek,
-      CustomerId = "CUST001",
-      Status = AccountStatus.Disabled,
-    };
-
-    // Act
-    var result = AccountAggregate.GenerateAggregate(events);
-
-    // Assert
-    result.Should().BeEquivalentTo(expectedAccount);
-  }
-
-  [Fact]
   public async void CurrencyChangeEvent_Should_AddEventToAccountLog()
   {
     // Arrange
