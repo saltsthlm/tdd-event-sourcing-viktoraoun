@@ -1,4 +1,4 @@
-using EventSourcing.Events;
+﻿using EventSourcing.Events;
 using EventSourcing.Exceptions;
 using EventSourcing.Models;
 
@@ -46,6 +46,9 @@ public class AccountAggregate
       case WithdrawalEvent withdrawal:
         Apply(withdrawal);
         break;
+      case DeactivationEvent deactivation:
+        Apply(deactivation);
+        break;
       default:
         throw new EventTypeNotSupportedException("162 ERROR_EVENT_NOT_SUPPORTED");
     }
@@ -78,7 +81,7 @@ public class AccountAggregate
   private void Apply(WithdrawalEvent withdrawal)
   {
     if(AccountId == null)
-  {
+    {
       throw new Exception("128 ERROR_ACCOUNT_UNINSTANTIATED");
     }
 
@@ -93,7 +96,16 @@ public class AccountAggregate
 
   private void Apply(DeactivationEvent deactivation)
   {
-    throw new NotImplementedException();
+    Status = AccountStatus.Disabled;
+    if(AccountLog == null)
+    {
+      AccountLog = new();
+    }
+    AccountLog.Add(new LogMessage(
+      "DEACTIVATE", 
+      deactivation.Reason, 
+      deactivation.Timestamp
+      ));
   }
 
   private void Apply(ActivationEvent activation)
