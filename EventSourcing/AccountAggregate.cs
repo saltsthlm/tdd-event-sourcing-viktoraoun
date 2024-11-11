@@ -43,6 +43,9 @@ public class AccountAggregate
       case DepositEvent deposit:
         Apply(deposit);
         break;
+      case WithdrawalEvent withdrawal:
+        Apply(withdrawal);
+        break;
       default:
         throw new EventTypeNotSupportedException("162 ERROR_EVENT_NOT_SUPPORTED");
     }
@@ -72,9 +75,20 @@ public class AccountAggregate
     }
   }
 
-  private void Apply(WithdrawalEvent wihdrawal)
+  private void Apply(WithdrawalEvent withdrawal)
   {
-    throw new NotImplementedException();
+    if(AccountId == null)
+  {
+      throw new Exception("128 ERROR_ACCOUNT_UNINSTANTIATED");
+    }
+
+    Balance -= withdrawal.amount;
+
+    if(Balance < 0)
+    {
+      throw new Exception("285 ERROR_BALANCE_IN_NEGATIVE");
+    }
+
   }
 
   private void Apply(DeactivationEvent deactivation)
