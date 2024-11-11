@@ -69,6 +69,10 @@ public class AccountAggregate
     {
       throw new Exception("128 ERROR_ACCOUNT_UNINSTANTIATED");
     }
+    else if(Status == AccountStatus.Disabled)
+    {
+      throw new Exception("344 ERROR_TRANSACTION_REJECTED_ACCOUNT_DEACTIVATED");
+    }
 
     Balance += deposit.Amount;
 
@@ -83,6 +87,10 @@ public class AccountAggregate
     if(AccountId == null)
     {
       throw new Exception("128 ERROR_ACCOUNT_UNINSTANTIATED");
+    }
+    else if(Status == AccountStatus.Disabled)
+    {
+      throw new Exception("344 ERROR_TRANSACTION_REJECTED_ACCOUNT_DEACTIVATED");
     }
 
     Balance -= withdrawal.amount;
