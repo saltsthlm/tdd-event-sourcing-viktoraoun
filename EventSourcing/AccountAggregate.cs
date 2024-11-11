@@ -121,7 +121,13 @@ public class AccountAggregate
 
   private void Apply(ActivationEvent activation)
   {
+    if(Status == AccountStatus.Enabled)
+    {
+      return;
+    }
+
     Status = AccountStatus.Enabled;
+
     if(AccountLog == null)
     {
       AccountLog = new();
