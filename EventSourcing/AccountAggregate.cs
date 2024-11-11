@@ -79,6 +79,10 @@ public class AccountAggregate
     {
       throw new Exception("344 ERROR_TRANSACTION_REJECTED_ACCOUNT_DEACTIVATED");
     }
+    else if(Status == AccountStatus.Closed)
+    {
+      throw new Exception("502 ERROR_ACCOUNT_CLOSED");
+    }
 
     Balance += deposit.Amount;
 
