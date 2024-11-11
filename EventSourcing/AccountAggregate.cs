@@ -151,6 +151,16 @@ public class AccountAggregate
 
   private void Apply(CurrencyChangeEvent currencyChange)
   {
+    if(AccountLog == null)
+    {
+      AccountLog = new();
+    }
+    AccountLog.Add(new LogMessage(
+      "CURRENCY-CHANGE", 
+      $"Change currency from '{Currency.ToString().ToUpper()}' to '{currencyChange.NewCurrency.ToString().ToUpper()}'", 
+      currencyChange.Timestamp
+      ));
+
     Currency = currencyChange.NewCurrency;
     Balance = currencyChange.NewBalance;
     Status = AccountStatus.Disabled;
